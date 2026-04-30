@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffd6e7" />
+    <title>Happy Birthday, Jheel 💖</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-effects" aria-hidden="true">
+      <div class="floating-hearts" id="floatingHearts"></div>
+      <div class="sparkle-layer" id="sparkleLayer"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="brand">For Jheel</div>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="musicToggle" type="button" aria-pressed="false" aria-label="Toggle background music">
+          <span class="icon" aria-hidden="true">♫</span>
+          <span class="icon-btn-label" id="musicLabel">Music: Off</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="app" id="app" aria-live="polite">
+      <!-- Page 1 -->
+      <section class="panel is-active" id="page-welcome" data-page="welcome" aria-label="Welcome">
+        <div class="card">
+          <h1 class="title fade-in">Hey Jheel, Someone made this just for you 💌</h1>
+          <div class="heart-wrap">
+            <a class="heart-btn pulse" id="welcomeHeart" href="#page-puzzle" role="button" aria-label="Tap the heart to continue">
+              <span class="heart" aria-hidden="true"></span>
+            </a>
+          </div>
+          <p class="hint fade-in delay-1">Tap the heart ❤️</p>
+        </div>
+      </section>
+
+      <!-- Page 2 -->
+      <section class="panel" id="page-puzzle" data-page="puzzle" aria-label="Puzzle">
+        <div class="card">
+          <h2 class="title">Jheel's Puzzle 🧩</h2>
+          <p class="subtitle">Solve with love 💕 Tap and drag to swap tiles</p>
+
+          <div class="puzzle-shell">
+            <div class="puzzle-toolbar">
+              <div class="puzzle-toolbar-left">
+                <button class="btn ghost" id="shuffleBtn" type="button">Shuffle</button>
+                <button class="btn ghost" id="previewBtn" type="button">Preview</button>
+              </div>
+              <div class="tiny">Tip: tap a tile, then tap another (or drag over one) to swap.</div>
+            </div>
+
+            <div class="puzzle-grid" id="puzzleGrid" aria-label="3 by 3 puzzle grid"></div>
+            <div class="puzzle-status" id="puzzleStatus" role="status"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="modal" id="previewModal" aria-hidden="true">
+        <div class="modal-backdrop" data-close="true"></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-label="Puzzle preview">
+          <div class="modal-head">
+            <div class="modal-title">Preview 💖</div>
+            <button class="icon-btn modal-close" id="previewClose" type="button" aria-label="Close preview">
+              <span class="icon" aria-hidden="true">✕</span>
+              <span class="icon-btn-label">Close</span>
+            </button>
+          </div>
+          <div class="preview-box" id="previewBox" aria-label="Completed image preview"></div>
+          <div class="tiny muted">Close and keep solving ✨</div>
+        </div>
+      </div>
+
+      <!-- Page 3 -->
+      <section class="panel" id="page-message" data-page="message" aria-label="Special message">
+        <div class="card">
+          <h2 class="title">A special message just for you 💌</h2>
+          <p class="message" id="specialMessage">
+            …
+          </p>
+
+          <div class="media-frame">
+            <img
+              class="media-img"
+              src="./assets/message.jpeg"
+              alt="A romantic memory"
+              loading="lazy"
+              onerror="this.closest('.media-frame').classList.add('is-missing')"
+            />
+            
+          <div class="actions">
+            <button class="btn primary" id="toProposalBtn" type="button">Continue ➡️</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page 4 -->
+      <section class="panel" id="page-proposal" data-page="proposal" aria-label="Proposal">
+        <div class="card">
+          <h2 class="title">A Question for you 💖</h2>
+          <p class="subtitle question">Will you forever be mine?</p>
+
+          <div class="proposal-area" id="proposalArea">
+            <button class="btn yes" id="yesBtn" type="button">Yes 💚</button>
+            <button class="btn no" id="noBtn" type="button">No ❌</button>
+          </div>
+
+          <div class="proposal-result" id="proposalResult" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- Final -->
+      <section class="panel" id="page-final" data-page="final" aria-label="Final video">
+        <div class="card">
+          <h2 class="title">One last thing…</h2>
+          <p class="subtitle">A little video, for a lot of feelings.</p>
+
+          <div class="video-frame">
+            <video
+              id="finalVideo"
+              class="video"
+              controls
+              playsinline
+              preload="metadata"
+              muted
+            >
+              <source src="./assets/video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <div class="media-fallback video-fallback" id="videoFallback">
+              <div class="fallback-title">Video couldn’t play</div>
+              <div class="fallback-sub">
+                Try re-exporting as <code>MP4 (H.264 + AAC)</code>, or download/open it directly:
+              </div>
+              <div class="actions">
+                <a class="btn ghost" href="./assets/video.mp4" download>Download video</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn ghost" id="restartBtn" type="button">Replay from start</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <audio id="bgMusic" preload="none" loop>
+      <source src="./assets/audio.mpeg" type="audio/mpeg" />
+    </audio>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Failsafe: ensure the heart ALWAYS works even if main JS fails -->
+    <script>
+      (function () {
+        function setActiveById(id) {
+          var panels = document.querySelectorAll(".panel");
+          for (var i = 0; i < panels.length; i++) panels[i].classList.remove("is-active");
+          var next = document.getElementById(id);
+          if (next) next.classList.add("is-active");
+        }
+
+        function syncFromHash() {
+          var id = (location.hash || "#page-welcome").slice(1);
+          setActiveById(id);
+        }
+
+        function wire() {
+          var heart = document.getElementById("welcomeHeart");
+          var welcome = document.getElementById("page-welcome");
+          if (heart) {
+            heart.addEventListener(
+              "click",
+              function () {
+                location.hash = "#page-puzzle";
+                syncFromHash();
+              },
+              { capture: true },
+            );
+            heart.addEventListener(
+              "touchstart",
+              function (e) {
+                e.preventDefault();
+                location.hash = "#page-puzzle";
+                syncFromHash();
+              },
+              { passive: false, capture: true },
+            );
+          }
+          if (welcome) {
+            welcome.addEventListener(
+              "touchstart",
+              function (e) {
+                var t = e.target;
+                if (t && t.closest && (t.closest(".topbar") || t.closest("#musicToggle"))) return;
+                location.hash = "#page-puzzle";
+                syncFromHash();
+              },
+              { passive: true },
+            );
+          }
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", function () {
+            wire();
+            syncFromHash();
+            window.addEventListener("hashchange", syncFromHash);
+          });
+        } else {
+          wire();
+          syncFromHash();
+          window.addEventListener("hashchange", syncFromHash);
+        }
+      })();
+    </script>
+
+    <!-- Libraries -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+    <script defer src="./script.js"></script>
+  </body>
+</html>
